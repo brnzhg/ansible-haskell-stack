@@ -1,0 +1,22 @@
+---
+- name: check Haskell Stack installed
+  stat: path=/usr/local/bin/stack
+  register: bin_stack
+  changed_when: bin_stack.stat.exists == False
+
+- name: download Haskell Stack installer
+  get_url:
+    url={{ stack_url }}
+    dest=/tmp/get-stack.sh
+    mode=0755
+  register: stack_installer_downloaded
+  when: bin_stack.stat.exists == False
+
+- name: install Haskell Stack
+  shell: "/tmp/get-stack.sh executable=/bin/bash"
+  register: stack_installed
+  when: stack_installer_downloaded is succeeded
+
+- name: Haskell Stack setup
+  command: stack setup
+  when: stack_installed is succeeded

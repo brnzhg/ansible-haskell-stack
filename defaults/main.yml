@@ -1,0 +1,4 @@
+---
+# defaults file for haskell-stack
+
+stack_url: https://get.haskellstack.org/ 
