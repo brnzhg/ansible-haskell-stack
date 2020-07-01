@@ -15,7 +15,7 @@
 - name: install Haskell Stack
   shell: "/tmp/get-stack.sh executable=/bin/bash"
   register: stack_installed
-  when: stack_installer_downloaded is succeeded
+  when: stack_installer_downloaded is succeeded and not stack_installer_downloaded is skipped
 
 - name: Haskell Stack setup
   command: stack setup
